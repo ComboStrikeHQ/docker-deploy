@@ -13,6 +13,8 @@ namespace :deploy do
   end
 
   def base_image
+    return "docker-rails:#{ENV['DOCKER_BASE_TAG']}" if ENV['DOCKER_BASE_TAG']
+
     ruby_version_string = File.open('.ruby-version', &:readline).chomp
     version = Gem::Version.new(ruby_version_string).segments.take(2).join('.')
     "docker-rails:ruby-#{version}"
